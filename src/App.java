@@ -16,9 +16,8 @@ public class App {
 
         System.out.println(playerHand);
         System.out.println(cardsOnTable);
-
-        combo.checkForPair(playerHand, cardsOnTable);
         
+        System.out.println(combo.checkForStraight(playerHand,cardsOnTable));
 
     }
 }
