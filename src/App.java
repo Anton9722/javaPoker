@@ -11,13 +11,22 @@ public class App {
         
         deck.shuffleDeck();
 
-        deck.dealCards(5, cardsOnTable);
-        deck.dealCards(2, playerHand);
+        //deck.dealCards(5, cardsOnTable);
+        //deck.dealCards(2, playerHand);
+
+        playerHand.add("Kh");
+        playerHand.add("Kq");
+        cardsOnTable.add("Ks");
+        cardsOnTable.add("Aq");
+        cardsOnTable.add("As");
+        cardsOnTable.add("Ad");
+        cardsOnTable.add("Qh");
 
         System.out.println(playerHand);
         System.out.println(cardsOnTable);
-        
-        System.out.println(combo.checkForStraight(playerHand,cardsOnTable));
+
+        System.out.println(combo.checkForFullHouse(playerHand, cardsOnTable));
+
 
     }
 }

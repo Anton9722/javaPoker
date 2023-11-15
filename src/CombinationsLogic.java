@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -102,11 +103,59 @@ public class CombinationsLogic {
         return false;
     }
 
-    public void checkForFlush() {
+    public boolean checkForFlush(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
+        // for loop to remove all card values and only get the suits in a string so [As],[Jh] would give us a string like "sh"
+        //for playercards
+        String cardSuits = "";
+        for (int i = 0; i < playerCards.size(); i++) {
+            char suit = playerCards.get(i).charAt(1); 
+            cardSuits += String.valueOf(suit);
+        }
+        //for cardson table
+        for (int i = 0; i < cardsOnTable.size(); i++) {
+            char suit = cardsOnTable.get(i).charAt(1); 
+            cardSuits += String.valueOf(suit);
+        }
+        
+        //go through all the suits and if it finds 5 of the same one we have a flush and returns true
+        //this function works the same as the one used for threeOfaKind
+        for (int i = 0; i < cardSuits.length(); i++) {
+            int counter = 0;
+            for (int j = 0; j < cardSuits.length(); j++) {
+                if(cardSuits.charAt(i) == cardSuits.charAt(j)) {
+                    counter++;
+                    if(counter == 5) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
         
     }
+    //FIX THIS***
+    // this function needs to be updated as right now if you have a full house with two tripples it does not register as a full hosue
+    public boolean checkForFullHouse(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
+        //removes suits from cards
+        removeSuitsFromCards(playerCards, cardsOnTable);
+        //we add all playerhand and cards on table into one arraylist
+        ArrayList<String> allCards = new ArrayList<>();
+        allCards.addAll(playerCards);
+        allCards.addAll(cardsOnTable);
 
-    public void checkForFullHouse() {
+        //if we find a 2 of the same cards and then three of the same cards we have found a fullhouse
+        for (String card : allCards) {
+            int amoutOfDuplicatedCards = Collections.frequency(allCards, card);
+            if(amoutOfDuplicatedCards == 2) {
+                for (String card2 : allCards) {
+                    int amoutOfDuplicatedCards2 = Collections.frequency(allCards, card2);
+                    if(amoutOfDuplicatedCards2 == 3) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
         
     }
 
