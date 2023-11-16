@@ -61,8 +61,8 @@ public class CombinationsLogic {
         return false;
         
     }
-
-    public boolean checkForStraight(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
+    // we return a string here as we use that in our straight flush function. we could just copy this into other function but for now i have it like this
+    public String checkForStraight(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
 
         ArrayList<String> allCards = new ArrayList<>();
         removeSuitsFromCards(playerCards, cardsOnTable);
@@ -80,6 +80,10 @@ public class CombinationsLogic {
         allCards.sort((card1, card2) -> straightOder.indexOf(card1) - straightOder.indexOf(card2));
         //turns list into a single string
         String allCardsSortedAsString = String.join("", allCards);
+        // this if statment adds an ace to beginning of string if it contains a string so we can check for both A2345 and TJQKA
+        if(allCardsSortedAsString.contains("A")) {
+            allCardsSortedAsString = "A" + allCardsSortedAsString;
+        }
         //arraylist of all diffrent straight combos
         ArrayList<String> allStraightCombinations = new ArrayList<>();
         allStraightCombinations.add("A2345");
@@ -96,11 +100,10 @@ public class CombinationsLogic {
         for (String straightCombo : allStraightCombinations) {
             if(allCardsSortedAsString.contains(straightCombo)) {
                 int indexOfWinningStraight = allStraightCombinations.indexOf(straightCombo);//will add feature to return strenght of straight 
-                System.out.println(allStraightCombinations.get(indexOfWinningStraight));    // so if 2 players have straight we can know who wins
-                return true;
+                return allStraightCombinations.get(indexOfWinningStraight);
             }
         }
-        return false;
+        return "NoStraight";
     }
 
     public boolean checkForFlush(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
@@ -159,12 +162,56 @@ public class CombinationsLogic {
         
     }
 
-    public void checkForFourOfaKind() {
+    public boolean checkForFourOfaKind(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
+        //removes suits from cards
+        removeSuitsFromCards(playerCards, cardsOnTable);
+        //we add all playerhand and cards on table into one arraylist
+        ArrayList<String> allCards = new ArrayList<>();
+        allCards.addAll(playerCards);
+        allCards.addAll(cardsOnTable);
+
+        // if we find 4 of the same cards we return true
+        for (String card : allCards) {
+            int amoutOfDuplicatedCards = Collections.frequency(allCards, card);
+            if(amoutOfDuplicatedCards == 4) {
+                return true;
+            }
+        }
+        return false;
+
+
 
     }
 
-    public void checkForStraightFlush() {
+    public boolean checkForStraightFlush(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
+        //1.put all cards involved with a straight in one list 2. if we find 5 of the same colors in those card we have a straight flush
+        ArrayList<String> allCards = new ArrayList<>();
+        //put all cards into one list
+        allCards.addAll(playerCards);
+        allCards.addAll(cardsOnTable);
+        //if there is a straight we get the straight combo as a string, if there is no straigt combo we have no straigh flush and return false
+        String straightCombo = checkForStraight(playerCards, cardsOnTable);
+        if(checkForStraight(playerCards, cardsOnTable) == "NoStraight") {
+            return false;
+        }
+        ArrayList<String> cardsInStraightWithOnlySuit = new ArrayList<>();
+        // go through all cards and if the card is involved with the straight add its suit to "cardsInStraightWithOnlySuit"
+        for (String card : allCards) {
+            String onlyCardValue = String.valueOf(card.charAt(0));
+            if(straightCombo.contains(onlyCardValue)) {
+                String onlyCardSuit = String.valueOf(card.charAt(1));
+                cardsInStraightWithOnlySuit.add(onlyCardSuit);
+            }
+        }
 
+        for (String suit : cardsInStraightWithOnlySuit) {
+            int amountOfSameSuits = Collections.frequency(cardsInStraightWithOnlySuit, suit);
+            if(amountOfSameSuits == 5) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void checkForRoyalFlush() {

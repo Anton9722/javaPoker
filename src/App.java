@@ -14,18 +14,18 @@ public class App {
         //deck.dealCards(5, cardsOnTable);
         //deck.dealCards(2, playerHand);
 
-        playerHand.add("Kh");
-        playerHand.add("Kq");
-        cardsOnTable.add("Ks");
+        playerHand.add("Ah");
+        playerHand.add("2h");
+        cardsOnTable.add("3h");
+        cardsOnTable.add("4h");
+        cardsOnTable.add("5h");
+        cardsOnTable.add("7d");
         cardsOnTable.add("Aq");
-        cardsOnTable.add("As");
-        cardsOnTable.add("Ad");
-        cardsOnTable.add("Qh");
 
         System.out.println(playerHand);
         System.out.println(cardsOnTable);
 
-        System.out.println(combo.checkForFullHouse(playerHand, cardsOnTable));
+        System.out.println(combo.checkForStraightFlush(playerHand, cardsOnTable));
 
 
     }
