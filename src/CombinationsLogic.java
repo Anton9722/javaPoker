@@ -1,8 +1,6 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 
 public class CombinationsLogic {
     
@@ -214,8 +212,88 @@ public class CombinationsLogic {
         return false;
     }
 
-    public void checkForRoyalFlush() {
+    public boolean checkForRoyalFlush(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
 
+        ArrayList<String> allCards = new ArrayList<>();
+        allCards.addAll(playerCards);
+        allCards.addAll(cardsOnTable);
+
+        ArrayList<String> spades = new ArrayList<>();
+        spades.add("As");
+        spades.add("Ks");
+        spades.add("Qs");
+        spades.add("Js");
+        spades.add("Ts");
+        int counter = 0;
+        for (String spade : spades) {
+            for (String card : allCards) {
+                if(card == spade) {
+                    counter++;
+                    if(counter == 5) {
+                        return true;
+                    }
+                }
+                
+            }
+        }
+        counter = 0;
+
+        ArrayList<String> hearts = new ArrayList<>();
+        hearts.add("Ah");
+        hearts.add("Kh");
+        hearts.add("Qh");
+        hearts.add("Jh");
+        hearts.add("Th");
+        for (String heart : hearts) {
+            for (String card : allCards) {
+                if(card == heart) {
+                    counter++;
+                    if(counter == 5) {
+                        return true;
+                    }
+                }
+                
+            }
+        }
+        counter = 0;
+
+        ArrayList<String> clubs = new ArrayList<>();
+        clubs.add("Aq");
+        clubs.add("Kq");
+        clubs.add("Qq");
+        clubs.add("Jq");
+        clubs.add("Tq");
+        for (String club : clubs) {
+            for (String card : allCards) {
+                if(card == club) {
+                    counter++;
+                    if(counter == 5) {
+                        return true;
+                    }
+                }
+                
+            }
+        }
+        counter = 0;
+        
+        ArrayList<String> diamonds = new ArrayList<>();
+        diamonds.add("Ad");
+        diamonds.add("Kd");
+        diamonds.add("Qd");
+        diamonds.add("Jd");
+        diamonds.add("Td");
+         for (String diamond : diamonds) {
+            for (String card : allCards) {
+                if(card == diamond) {
+                    counter++;
+                    if(counter == 5) {
+                        return true;
+                    }
+                }
+                
+            }
+        }
+        return false;
     }
 
     public void checkForHighCard(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
