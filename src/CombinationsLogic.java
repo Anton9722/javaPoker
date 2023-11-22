@@ -134,8 +134,7 @@ public class CombinationsLogic {
         return false;
         
     }
-    //FIX THIS***
-    // this function needs to be updated as right now if you have a full house with two tripples it does not register as a full hosue
+
     public boolean checkForFullHouse(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
         //removes suits from cards
         removeSuitsFromCards(playerCards, cardsOnTable);
@@ -144,13 +143,19 @@ public class CombinationsLogic {
         allCards.addAll(playerCards);
         allCards.addAll(cardsOnTable);
 
-        //if we find a 2 of the same cards and then three of the same cards we have found a fullhouse
+        //if we find a 3 of the same cards and then three or two of the same cards we have found a fullhouse
         for (String card : allCards) {
             int amoutOfDuplicatedCards = Collections.frequency(allCards, card);
-            if(amoutOfDuplicatedCards == 2) {
+            if(amoutOfDuplicatedCards == 3) {
+                // we remove the 3 cards that are the same so we dont count the same cards again and get true if we have a tripple for example
+                for (int i = 0; i < allCards.size(); i++) {
+                    if(card == allCards.get(i)) {
+                        allCards.remove(i);
+                    }
+                }
                 for (String card2 : allCards) {
                     int amoutOfDuplicatedCards2 = Collections.frequency(allCards, card2);
-                    if(amoutOfDuplicatedCards2 == 3) {
+                    if(amoutOfDuplicatedCards2 == 3 || amoutOfDuplicatedCards2 == 2) {
                         return true;
                     }
                 }
@@ -296,9 +301,6 @@ public class CombinationsLogic {
         return false;
     }
 
-    public void checkForHighCard(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
-        
-    }
     //cards come like "Kd","2s" for example, this removes the suit and give us "K", "2" with we need for out other functions
     public void removeSuitsFromCards(ArrayList<String> playerCards, ArrayList<String> cardsOnTable) {
         

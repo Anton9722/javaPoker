@@ -14,18 +14,18 @@ public class App {
         //deck.dealCards(5, cardsOnTable);
         //deck.dealCards(2, playerHand);
 
+        playerHand.add("As");
         playerHand.add("Ah");
-        playerHand.add("Kh");
+        cardsOnTable.add("Js");
         cardsOnTable.add("Jh");
-        cardsOnTable.add("Th");
-        cardsOnTable.add("Qh");
+        cardsOnTable.add("Jq");
         cardsOnTable.add("7d");
         cardsOnTable.add("Aq");
 
         System.out.println(playerHand);
         System.out.println(cardsOnTable);
 
-        System.out.println(combo.checkForRoyalFlush(playerHand, cardsOnTable));
+        System.out.println(combo.checkForFullHouse(playerHand, cardsOnTable));
 
 
     }
